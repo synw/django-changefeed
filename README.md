@@ -53,16 +53,16 @@ Example hello world:
 # in settings.py
 CHANGEFLOW_HANDLERS = ['myapp.handlers']
 
-# anywhere in your code
-from changeflow.tasks import push_to_flow
-push_to_flow.delay("testdb", "testtable", {"message":"Hello world"})
-
 # in handlers.py
 def flow_handlers(database, table, change):
 	if database == 'test' and table == 'testtable':
     	message = change['new_val']['message']
     	print message
     return
+
+# anywhere in your code
+from changeflow.tasks import push_to_flow
+push_to_flow.delay("testdb", "testtable", {"message":"Hello world"})
   ```
   
 Todo
@@ -71,4 +71,6 @@ Todo
 - Manage update and delete operations
 - Manage indexes and keys
 - Autoclean functions
+
+Contributions are welcome.
  
