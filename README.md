@@ -31,8 +31,8 @@ use a `flow_handlers` function to do whatever you want (like sending some data t
   ```python
 # this function will be triggered on every change in the Rethinkdb data
 def flow_handlers(database, table, change):
-    print str(database)
-    print str(table)
+    print database
+    print table
     print str(change['old_val'])
     print str(change['new_val'])
     return
