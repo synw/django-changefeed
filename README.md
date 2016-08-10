@@ -24,8 +24,8 @@ from changeflow.tasks import push_to_flow
 push_to_flow.delay("database_name", "table_name", {"field_name":"field_value"})
   ```
 
-Note: if the database does not exists it will be created. Same for the table. 
-This creates new entries in the database.
+Note: if the database does not exists it will be created. Same for the table (this behavior might change in the
+future due to some performance reasons). This creates new entries in the database.
 
 To handle the data changes create a `changeflow.py` file in your project directory (where settings.py is) and
 use a `flow_handlers` function to do whatever you want (like sending some data to a websocket for example):
@@ -55,7 +55,7 @@ CHANGEFLOW_HANDLERS = ['myapp.handlers']
 
 # in handlers.py
 def flow_handlers(database, table, change):
-	if database == 'test' and table == 'testtable':
+	if database == 'testdb' and table == 'testtable':
     	message = change['new_val']['message']
     	print message
     return
