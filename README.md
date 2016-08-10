@@ -37,3 +37,13 @@ def flow_handlers(database, table, change):
     print str(change['new_val'])
     return
   ```
+  
+You can also create handlers directly in your apps by creating a file with a `flow_handlers`
+function, and declare it in a setting:
+
+   ```python
+# in settings.py
+CHANGEFLOW_HANDLERS = ['mymodule.myfile']
+  ```
+
+ 

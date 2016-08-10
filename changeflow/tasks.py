@@ -4,7 +4,7 @@ import importlib
 import rethinkdb as r
 from celery import task
 from celery_once import QueueOnce
-from changeflow.conf import RETHINKDB_HOST, RETHINKDB_PORT, SITE_SLUG, VERBOSE
+from changeflow.conf import RETHINKDB_HOST, RETHINKDB_PORT, SITE_SLUG, VERBOSE, HANDLERS
 
 @task(ignore_results=True)
 def push_to_flow(database=SITE_SLUG, table='changeflow', data={}):
@@ -52,9 +52,9 @@ def flow_listener(**kwargs):
     
     conn = r.connect(RETHINKDB_HOST, RETHINKDB_PORT).repl()
     for change in r.db(database).table(table).changes().run(conn):
-        mod = SITE_SLUG+'.changeflow'
-        changeflow = importlib.import_module(mod)
-        changeflow.flow_handlers(database, table, change)
+        for handler in HANDLERS:
+            changeflow = importlib.import_module(handler)
+            changeflow.flow_handlers(database, table, change)
 
 
     
