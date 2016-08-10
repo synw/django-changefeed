@@ -7,7 +7,7 @@ Rethinkdb in Django.
 Install
 -------
 
-Clone the repository and get the python client `pip install rethinkdb` and add `'changeflow',` to INSTALLED_APPS.
+Clone the repository and get the python client `pip install rethinkdb celery celery-once` and add `'changeflow',` to INSTALLED_APPS.
 You will also need a Celery worker. It will handle the push data operations as an asynchronous task and will
 launch a listener to handle the changes flow.
 
