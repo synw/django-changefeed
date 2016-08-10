@@ -26,7 +26,7 @@ Note: if the database does not exists it will be created. Same for the table. If
 be updated, otherwise it will be created.
 
 To handle the data changes create a `changeflow.py` file in your project directory (where settings.py is) and
-tweak the flow handlers to do whatever you want (like sending some data to a websocket for example):
+use a `flow handlers` function to do whatever you want (like sending some data to a websocket for example):
 
   ```python
 # this function will be triggered on every change in the Rethinkdb data
