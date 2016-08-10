@@ -51,6 +51,7 @@ def flow_listener(**kwargs):
         table = "changeflow"
     
     conn = r.connect(RETHINKDB_HOST, RETHINKDB_PORT).repl()
+    print "H: "+str(HANDLERS)
     for change in r.db(database).table(table).changes().run(conn):
         for handler in HANDLERS:
             changeflow = importlib.import_module(handler)

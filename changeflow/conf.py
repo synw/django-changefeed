@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import importlib
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 
@@ -14,4 +15,19 @@ except ImportError:
     
 VERBOSE = getattr(settings, 'CHANGEFLOW_VERBOSE', True)
 
-HANDLERS = getattr(settings, 'CHANGEFLOW_HANDLERS', [SITE_SLUG+'.changeflow'])
+DEFAULT_HANDLER = SITE_SLUG+'.changeflow'
+CUSTOM_HANDLERS = getattr(settings, 'CHANGEFLOW_HANDLERS', [])
+
+try:
+    importlib.import_module(DEFAULT_HANDLER)
+    has_default_handler = True
+except ImportError:
+    has_default_handler = False
+
+if has_default_handler:
+    if CUSTOM_HANDLERS == []:
+        HANDLERS = [DEFAULT_HANDLER]
+    else:
+        CUSTOM_HANDLERS.append(DEFAULT_HANDLER)
+else:
+    HANDLERS = CUSTOM_HANDLERS
