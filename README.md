@@ -9,7 +9,7 @@ Install
 
 Clone the repository and get the python client `pip install rethinkdb`
 You will also need a Celery worker. It will handle the push data operations as an asynchronous task and will
-launch a listener to handle the changes flow.
+launch a listener to handle the changes flow. Add `'changeflow` to INSTALLED_APPS.
 
 Usage
 -----
