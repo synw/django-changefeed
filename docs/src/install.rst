@@ -15,6 +15,20 @@ Now create your database and table in the Rethinkdb client.
 
 Settings
 --------
+
+Required settings
+^^^^^^^^^^^^^^^^^
+
+.. highlight:: python
+
+::
+
+   SITE_SLUG = "mysite"
+   
+This is required for internal prefixing
+
+Optional settings
+^^^^^^^^^^^^^^^^^
    
 You can set a default database and default table to be used:
 
