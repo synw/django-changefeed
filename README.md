@@ -22,6 +22,8 @@ To push some data into Rethinkdb:
 from changeflow.tasks import push_to_flow
 
 push_to_flow.delay("database_name", "table_name", {"field_name":"field_value"})
+# for batch insert:
+push_to_flow.delay("database_name", "table_name", [{"field1_name":"field1_value"},{"field1_name":"field1_value"}])
   ```
 
 Note: if the database does not exists it will be created. Same for the table (this behavior might change in the
@@ -69,7 +71,8 @@ Todo
 ----
 
 - Manage update and delete operations
-- Manage indexes and keys
+- Manage indexes
+- Filters for the listener
 - Autoclean functions
 
 Contributions are welcome.
