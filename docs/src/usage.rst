@@ -1,6 +1,15 @@
 Usage
 =====
 
+Launch a Celery worker:
+
+.. highlight:: bash
+
+::
+
+   celery -A mogo worker  -l info --broker='redis://localhost:6379/0'
+   # or any option you want
+
 Push a document to Rethinkdb
 ----------------------------
 
