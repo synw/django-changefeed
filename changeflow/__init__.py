@@ -1,2 +1,6 @@
+# -*- coding: utf-8 -*-
+
 from changeflow.tasks import flow_listener
-flow_listener.delay()
+from changeflow.conf import DATABASE, TABLE
+
+flow_listener.delay(DATABASE, TABLE)

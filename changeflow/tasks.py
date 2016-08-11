@@ -4,55 +4,29 @@ import importlib
 import rethinkdb as r
 from celery import task
 from celery_once import QueueOnce
-from changeflow.conf import RETHINKDB_HOST, RETHINKDB_PORT, SITE_SLUG, VERBOSE, HANDLERS
+from changeflow.utils import insert_in_table
+from changeflow.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS ,DATABASE, TABLE, R_QUERY
+
 
 @task(ignore_results=True)
-def push_to_flow(database=SITE_SLUG, table='changeflow', data={}):
-    conn = r.connect(RETHINKDB_HOST, RETHINKDB_PORT).repl()
-    # check if db exists or create it
-    dblist = r.db_list().run(conn)
-    if database not in dblist:
-        if VERBOSE is True:
-            print "Database "+database+" not found"
-            print "* Creating database "+database
-        r.db_create(database).run(conn)
-    conn.use(database)
-    # check if table exists
-    tables_list = r.db(database).table_list().run(conn)
-    if table not in tables_list:
-        if VERBOSE is True:
-            print "Table "+table+" not found"
-            print "* Creating table "+table
-        r.db(database).table_create(table).run(conn)
-    # push data into table
-    if VERBOSE is True:
-        print "Inserting data into table "+table
-    res = r.db(database).table(table).insert(data, return_changes=True, conflict="update").run(conn)
-    if res['errors'] == 0:
-        if res["inserted"] > 0:
-            if VERBOSE is True:
-                print "Data inserted in table"
-        if res["replaced"] > 0:
-            if VERBOSE is True:
-                print "Data was updated in table"
+def push_to_db(database=DATABASE, table=TABLE, data={}):
+    insert_in_table(database, table, data)
+    return
+
+@task(ignore_results=True)
+def push_to_flow(data):
+    insert_in_table(DATABASE, TABLE, data)
     return
 
 @task(base=QueueOnce, once={'graceful': True, 'keys': []})
-def flow_listener(**kwargs):
+def flow_listener(database, table, r_query=R_QUERY):
     if VERBOSE is True:
-        print "*************************** Flow listener started *********************************************"
-    if kwargs.has_key('database'):
-        database = kwargs['database']
-    else:
-        database = SITE_SLUG
-    if kwargs.has_key('table'):
-        table = kwargs['table']
-    else:
-        table = "changeflow"
-    
+        print "*************************** Flow listener started ***************************"
+        
     conn = r.connect(RETHINKDB_HOST, RETHINKDB_PORT).repl()
-    print "H: "+str(HANDLERS)
-    for change in r.db(database).table(table).changes().run(conn):
+    if r_query is None:
+        r_query = r.db(database).table(table).changes()
+    for change in r_query.run(conn):
         for handler in HANDLERS:
             changeflow = importlib.import_module(handler)
             changeflow.flow_handlers(database, table, change)
