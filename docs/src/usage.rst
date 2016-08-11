@@ -1,7 +1,7 @@
 Usage
 =====
 
-Launch a Celery worker:
+Run Rethinkdb and Launch a Celery worker:
 
 .. highlight:: bash
 
@@ -17,7 +17,7 @@ Push a document to Rethinkdb
 
 ::
 
-   from changeflow.tasks import push_to_flow
+   from changeflow.tasks import push_to_flow, push_to_db
 
    data = {"field_name":"field_value"}
    # this is to push to the default db and table
