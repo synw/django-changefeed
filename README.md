@@ -15,7 +15,8 @@ Quick example:
 Push a document to Rethinkdb:
 
   ```python
-from changefeed.tasks import push_to_flow
+from changefeed.tasks import push_to_feed
+
 push_to_feed.delay({"message":"Hello world"})
   ```
 Handle the changefeed events:

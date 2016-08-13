@@ -27,5 +27,6 @@ Make a "testdb" and a "testtable" in the Rethinkdb client.
     	r.db("testdb").table("testtable").pluck('message').changes()
 
    # anywhere in your code
-   from changefeed.tasks import push_to_flow
+   from changefeed.tasks import push_to_feed
+   
    push_to_feed.delay({"message":"Hello world"})
