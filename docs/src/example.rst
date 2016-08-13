@@ -5,7 +5,6 @@ Example hello world:
 
 Make a "testdb" and a "testtable" in the Rethinkdb client.
 
-
 .. highlight:: python
 
 ::
