@@ -3,14 +3,16 @@ Django Changefeed
 
 This module makes it easy to use the realtime capabilities of Rethinkdb in Django.
 
-Features:
+Features
+--------
 
 - Push data to a table
 - Handle in Django the data coming from the Rethinkdb changefeed
 
 Depends on Celery for the async jobs.
 
-Quick example:
+Quick example
+-------------
 
 Push a document to Rethinkdb:
 
@@ -26,9 +28,12 @@ def feed_handlers(database, table, change):
 	# get the field "message" from the table "table" from db "database"
 	message = change['new_val']['message']
 	old_message = change['old_val']['message']
-	# do what you want whith it
+	# do what you want with it
 	print message
 	return
   ```
 
-Read the [documentation](http://django-changefeed.readthedocs.io/en/latest/) for details.
+Documentation
+-------------
+
+Read the [documentation](http://django-changefeed.readthedocs.io/en/latest/).
