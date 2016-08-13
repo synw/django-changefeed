@@ -1,4 +1,4 @@
-.. Django Changeflow documentation master file, created by
+.. Django Changefeed documentation master file, created by
    sphinx-quickstart on Thu Aug 11 15:27:00 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
