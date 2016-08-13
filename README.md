@@ -10,4 +10,4 @@ Features:
 
 Depends on Celery for the async jobs.
 
-Read the [documentation](http://django-changeflow.readthedocs.io/en/latest/).
+Read the [documentation](http://django-changefeed.readthedocs.io/en/latest/).
