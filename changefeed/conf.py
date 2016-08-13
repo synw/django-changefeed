@@ -13,12 +13,12 @@ try:
 except ImportError:
     raise ImproperlyConfigured(u"Changeflow; a SITE_SLUG setting is required")
 
-DATABASE = getattr(settings, 'CHANGEFLOW_DB', SITE_SLUG)
-TABLE = getattr(settings, 'CHANGEFLOW_TABLE', 'changeflow')
+DATABASE = getattr(settings, 'CHANGEFEED_DB', SITE_SLUG)
+TABLE = getattr(settings, 'CHANGEFEED_TABLE', 'changefeed')
     
-VERBOSE = getattr(settings, 'CHANGEFLOW_VERBOSE', True)
+VERBOSE = getattr(settings, 'CHANGEFEED_VERBOSE', True)
 
-CUSTOM_HANDLERS = getattr(settings, 'CHANGEFLOW_HANDLERS', [])
+CUSTOM_HANDLERS = getattr(settings, 'CHANGEFEED_HANDLERS', [])
 
 default_handlers = SITE_SLUG+'.r_handlers'
 R_QUERY = None
@@ -35,9 +35,9 @@ if has_default_handler:
     HANDLERS = [default_handlers]
     # check for the flow_handlers function presence
     try:
-        h = mod.flow_handlers
+        h = mod.feed_handlers
     except:
-        raise ImproperlyConfigured(u'Changeflow: You must add a flow_handlers function in you r_handlers.py file')
+        raise ImproperlyConfigured(u'Changefeed: You must add a feed_handlers function in you r_handlers.py file')
     # check for the r_query function presence
     try:
         q = mod.r_query
@@ -50,4 +50,4 @@ if len(CUSTOM_HANDLERS) > 0:
     HANDLERS = HANDLERS+CUSTOM_HANDLERS
 
 if HANDLERS == []:
-    raise ImproperlyConfigured(u'Changeflow; No handlers set: please create a changeflow.py in your main application directory (where settings.py is).')
+    raise ImproperlyConfigured(u'Changefeed; No handlers set: please create a r_handlers.py in your main application directory (where settings.py is).')

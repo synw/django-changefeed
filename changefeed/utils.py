@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import rethinkdb as r
-from changeflow.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE
+from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE
 
 
 def insert_in_table(database, table, data):

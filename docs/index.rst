@@ -3,22 +3,29 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Django Changeflow
+Django Changefeed
 =================
 
 .. Install
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    
    src/install
    
-.. Usage
+.. Push to Rethinkdb
    
 .. toctree::
    :maxdepth: 3
    
-   src/usage
+   src/push
+   
+.. Handle the change events
+   
+.. toctree::
+   :maxdepth: 3
+   
+   src/handlers
 
 .. toctree::
    :maxdepth: 2

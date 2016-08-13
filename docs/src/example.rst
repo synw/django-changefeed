@@ -11,14 +11,14 @@ Make a "testdb" and a "testtable" in the Rethinkdb client.
 ::
 
    # in settings.py
-   CHANGEFLOW_DB = "testdb"
-   CHANGEFLOW_TABLE = "testtable"
+   CHANGEFEED_DB = "testdb"
+   CHANGEFEED_TABLE = "testtable"
    
-   CHANGEFLOW_HANDLERS = ['mymodule.r_handlers']
+   CHANGEFEED_HANDLERS = ['mymodule.r_handlers']
    # or just use a r_handlers.py file in your main app directory
    
    # in mymodule/r_handlers.py
-   def flow_handlers(database, table, change):
+   def feed_handlers(database, table, change):
    	message = change['new_val']['message']
      	print message
      return
@@ -28,5 +28,5 @@ Make a "testdb" and a "testtable" in the Rethinkdb client.
     	r.db("testdb").table("testtable").pluck('message').changes()
 
    # anywhere in your code
-   from changeflow.tasks import push_to_flow
-   push_to_flow.delay({"message":"Hello world"})
+   from changefeed.tasks import push_to_flow
+   push_to_feed.delay({"message":"Hello world"})
