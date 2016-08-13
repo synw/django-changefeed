@@ -1,4 +1,4 @@
-Django Changeflow
+Django Changefeed
 =================
 
 This module makes it easy to use the realtime capabilities of Rethinkdb in Django.
