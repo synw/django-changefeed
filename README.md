@@ -24,6 +24,7 @@ push_to_feed.delay({"message":"Hello world"})
 Handle the changefeed events:
   
   ```python
+# this function will be triggered on every change in the Rethinkdb data
 def feed_handlers(database, table, change):
 	# get the field "message" from the table "table" from db "database"
 	message = change['new_val']['message']
