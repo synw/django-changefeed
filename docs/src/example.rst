@@ -29,4 +29,4 @@ Make a "testdb" and a "testtable" in the Rethinkdb client.
    # anywhere in your code
    from changefeed.tasks import push_to_feed
    
-   push_to_feed.delay({"message":"Hello world"})
+   push_to_feed({"message":"Hello world"})

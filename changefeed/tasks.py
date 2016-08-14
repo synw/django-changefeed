@@ -7,12 +7,12 @@ from celery_once import QueueOnce
 
 
 @task(ignore_results=True)
-def push_to_db(database=DATABASE, table=TABLE, data={}):
+def _push_to_db(database=DATABASE, table=TABLE, data={}):
     R.write(database, table, data)
     return
 
 @task(ignore_results=True)
-def push_to_feed(data):
+def _push_to_feed(data):
     R.write(DATABASE, TABLE, data)
     return
 
@@ -20,6 +20,12 @@ def push_to_feed(data):
 def feed_listener(database, table, r_query=None):   
     R.listen(database, table, r_query)
     return
+
+def push_to_feed(data):
+    return _push_to_feed.delay(data)
+
+def _push_to_db(database=DATABASE, table=TABLE, data={}):
+    return _push_to_db.delay(database, table, data)
     
 
 

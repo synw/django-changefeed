@@ -19,7 +19,7 @@ Push a document to Rethinkdb:
   ```python
 from changefeed.tasks import push_to_feed
 
-push_to_feed.delay({"message":"Hello world"})
+push_to_feed({"message":"Hello world"})
   ```
 Handle the changefeed events:
   
