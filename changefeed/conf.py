@@ -21,7 +21,7 @@ VERBOSE = getattr(settings, 'CHANGEFEED_VERBOSE', True)
 CUSTOM_HANDLERS = getattr(settings, 'CHANGEFEED_HANDLERS', [])
 
 default_handlers = SITE_SLUG+'.r_handlers'
-R_QUERY = None
+
 try:
     mod = importlib.import_module(default_handlers)
     has_default_handler = True
