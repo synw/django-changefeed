@@ -41,13 +41,21 @@ You can set a default database and default table to be used:
    # default table is set to "changefeed"
    CHANGEFEED_TABLE = "mytable"
    
-The worker is verbose by default. To silence it use this in settings.py:
+The worker is verbose by default. To silence it use this:
 
 .. highlight:: python
 
 ::
 
    CHANGEFEED_VERBOSE = False
+   
+The feed listener is launched by default. If you wish not to listen to the changefeed:
+
+.. highlight:: python
+
+::
+
+   CHANGEFEED_LISTEN = False
    
 Run
 ---

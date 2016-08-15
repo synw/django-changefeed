@@ -8,6 +8,8 @@ from django.conf import settings
 RETHINKDB_HOST = getattr(settings, 'RETHINKDB_HOST', 'localhost')
 RETHINKDB_PORT = getattr(settings, 'RETHINKDB_PORT', 28015)
 
+LISTEN = getattr(settings, 'CHANGEFEED_LISTEN', True)
+
 try:
     SITE_SLUG = getattr(settings, 'SITE_SLUG', 'site')
 except ImportError:
