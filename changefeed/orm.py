@@ -32,8 +32,8 @@ class RethinkDB():
     def listener_default_query(self, database, table):
         return r.db(database).table(table).changes()
     
-    def listen(self, database, table, r_query):
-        conn = R.connect()
+    def listen(self, database, table, r_query=None):
+        conn = self.connect()
         if r_query is None:
             r_query = self.listener_default_query(database, table)
         if VERBOSE is True:
@@ -45,4 +45,4 @@ class RethinkDB():
                 changefeed.feed_handlers(database, table, change)
         return
     
-R = RethinkDB( )
+R = RethinkDB()
