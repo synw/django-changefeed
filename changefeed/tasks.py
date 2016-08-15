@@ -24,7 +24,7 @@ def feed_listener(database, table, r_query=None):
 def push_to_feed(data):
     return _push_to_feed.delay(data)
 
-def _push_to_db(database=DATABASE, table=TABLE, data={}):
+def push_to_db(database=DATABASE, table=TABLE, data={}):
     return _push_to_db.delay(database, table, data)
     
 
