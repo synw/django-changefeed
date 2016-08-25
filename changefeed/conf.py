@@ -33,25 +33,25 @@ except ImportError:
     has_default_handler = False
 
 HANDLERS = []
-
-# check for a SITE_SLUG/r_handlers.py file
-if has_default_handler:
-    HANDLERS = [default_handlers]
-    # check for the flow_handlers function presence
-    try:
-        h = mod.feed_handlers
-    except:
-        raise ImproperlyConfigured(u'Changefeed: You must add a feed_handlers function in you r_handlers.py file')
-    # check for the r_query function presence
-    try:
-        q = mod.r_query
-        R_QUERY = q()
-    except:
-        pass
-
-# check for custom handlers
-if len(CUSTOM_HANDLERS) > 0:
-    HANDLERS = HANDLERS+CUSTOM_HANDLERS
-
-if HANDLERS == []:
-    raise ImproperlyConfigured(u'Changefeed; No handlers set: please create a r_handlers.py in your main application directory (where settings.py is).')
+if LISTEN is True:   
+    # check for a SITE_SLUG/r_handlers.py file
+    if has_default_handler:
+        HANDLERS = [default_handlers]
+        # check for the flow_handlers function presence
+        try:
+            h = mod.feed_handlers
+        except:
+            raise ImproperlyConfigured(u'Changefeed: You must add a feed_handlers function in you r_handlers.py file')
+        # check for the r_query function presence
+        try:
+            q = mod.r_query
+            R_QUERY = q()
+        except:
+            pass
+    
+    # check for custom handlers
+    if len(CUSTOM_HANDLERS) > 0:
+        HANDLERS = HANDLERS+CUSTOM_HANDLERS
+    
+    if HANDLERS == []:
+        raise ImproperlyConfigured(u'Changefeed; No handlers set: please create a r_handlers.py in your main application directory (where settings.py is).')

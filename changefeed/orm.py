@@ -2,7 +2,7 @@
 
 import importlib
 import rethinkdb as r
-from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS
+from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS, DATABASE, TABLE
 
 
 class RethinkDB():
@@ -28,6 +28,10 @@ class RethinkDB():
             print "ERROR: "+str(res['errors'])
         conn.close()
         return
+    
+    def run_query(self, r_query):
+        conn = self.connect()
+        return r_query.run(conn)
     
     def listener_default_query(self, database, table):
         return r.db(database).table(table).changes()
