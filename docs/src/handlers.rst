@@ -26,8 +26,15 @@ You can set a custom ReQL query for the listener in ``r_handlers.py`` with a ``r
 Write the handlers
 ^^^^^^^^^^^^^^^^^^
 
-In ``r_handlers.py`` use a ``feed_handlers`` function to do whatever you want 
-(like sending some data to a websocket for example):
+.. highlight:: python
+
+::
+
+   # in settings.py
+   CHANGEFEED_LISTEN = True
+
+In your root directory (SITE_SLUG) create a ``r_handlers.py`` file and a ``feed_handlers`` function to do 
+whatever you want, like to broadcast the data to a websocket:
 
 .. highlight:: python
 
@@ -42,12 +49,12 @@ In ``r_handlers.py`` use a ``feed_handlers`` function to do whatever you want
        return
        
 You can also manage handlers directly from your apps by creating a file with a ``feed_handlers`` function, 
-and declare it in a setting:
+and launch a listener from the ``__init__.py`` file of your app:
 
 .. highlight:: python
 
 ::
 
-   # in settings.py
-   CHANGEFEED_HANDLERS = ['mymodule.r_handlers']
+   from changefeed.tasks import feed_listener
+   feed_listener.delay("database", "table", "mymodule.r_handlers")
 
