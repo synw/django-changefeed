@@ -49,5 +49,5 @@ and declare it in a setting:
 ::
 
    # in settings.py
-   CHANGEFEED_HANDLERS = ['mymodule.myfile']
+   CHANGEFEED_HANDLERS = ['mymodule.r_handlers']
 

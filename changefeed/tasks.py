@@ -4,16 +4,16 @@ from changefeed.orm import R
 from changefeed.conf import DATABASE, TABLE, PUSH_AYSNC, LISTEN
 if LISTEN is True or PUSH_AYSNC is True:
     from celery import shared_task
-    from celery_once import QueueOnce
 
 
 if LISTEN is True:
-    @shared_task(base=QueueOnce, once={'graceful': True, 'keys': []})
-    def feed_listener(database, table, r_query=None):   
-        R.listen(database, table, r_query)
+
+    @shared_task(ignore_results=True)
+    def feed_listener(database, table, handler, r_query=None): 
+        R.listen(database, table, handler, r_query)
         return
 
-if PUSH_AYSNC is False:
+if PUSH_AYSNC is True:
     
     @shared_task(ignore_results=True)
     def push_to_db(database=DATABASE, table=TABLE, data={}):

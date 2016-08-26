@@ -2,7 +2,7 @@
 
 import importlib
 import rethinkdb as r
-from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS, DATABASE, TABLE
+from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS
 
 
 class RethinkDB():
@@ -15,15 +15,15 @@ class RethinkDB():
         conn = self.connect()
         # push data into table
         if VERBOSE is True:
-            print "Inserting data into table "+table
+            print "Inserting data into database "+database
         res = r.db(database).table(table).insert(data, return_changes=True, conflict="replace").run(conn)
         if res['errors'] == 0:
             if res["inserted"] > 0:
                 if VERBOSE is True:
-                    print "Data inserted in table"
+                    print "Data inserted into table "+table
             if res["replaced"] > 0:
                 if VERBOSE is True:
-                    print "Data was updated in table"
+                    print "Data updated in table "+table
         else:
             print "ERROR: "+str(res['errors'])
         conn.close()
@@ -33,20 +33,27 @@ class RethinkDB():
         conn = self.connect()
         return r_query.run(conn)
     
-    def listener_default_query(self, database, table):
-        return r.db(database).table(table).changes()
+    def get_default_query(self, database, table):
+        q = r.db(database).table(table).changes()
+        return q
     
-    def listen(self, database, table, r_query=None):
-        conn = self.connect()
+    def get_listener_query(self, database, table, handlerpath):
+        handler = importlib.import_module(handlerpath)
+        try:
+            q = handler.r_query()
+        except ImportError:
+            q = self.get_default_query(database, table)
+        return q
+    
+    def listen(self, database, table, handler, r_query=None):
+        conn = self.connect() 
         if r_query is None:
-            r_query = self.listener_default_query(database, table)
+            r_query = self.get_listener_query(database, table, handler)
         if VERBOSE is True:
-            print "*************************** Listening to feed "+table+" ***************************"
-            print "Using handlers "+str(HANDLERS)
+            print "*********** Listening using handler "+str(handler)+" with query "+str(r_query)
         for change in r_query.run(conn):
-            for handler in HANDLERS:
-                changefeed = importlib.import_module(handler)
-                changefeed.feed_handlers(database, table, change)
+            handler = importlib.import_module(handler)
+            handler.feed_handlers(database, table, change)
         return
     
 R = RethinkDB()

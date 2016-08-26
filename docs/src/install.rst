@@ -7,7 +7,7 @@ Install
 
    cd my_project
    git clone https://github.com/synw/django-changefeed.git && mv django-changefeed/changefeed . && rm -rf django-changefeed
-   pip install rethinkdb celery celery-once
+   pip install rethinkdb celery
    
 Then add ``'changefeed',`` to INSTALLED_APPS.
 
