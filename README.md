@@ -35,3 +35,9 @@ Documentation
 -------------
 
 Read the [documentation](http://django-changefeed.readthedocs.io/en/latest/).
+
+Example app
+-----------
+
+[Jafeed](https://github.com/synw/jafeed): rss aggregator that listens to the changefeed to display 
+live update notifications
