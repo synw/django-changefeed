@@ -2,7 +2,7 @@
 
 import importlib
 import rethinkdb as r
-from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE, HANDLERS
+from changefeed.conf import RETHINKDB_HOST, RETHINKDB_PORT, VERBOSE
 
 
 class RethinkDB():
@@ -34,7 +34,7 @@ class RethinkDB():
         return r_query.run(conn)
     
     def get_default_query(self, database, table):
-        q = r.db(database).table(table).changes()
+        q = r.db(database).table(table).changes(include_types=True)
         return q
     
     def get_listener_query(self, database, table, handlerpath):
@@ -50,9 +50,9 @@ class RethinkDB():
         if r_query is None:
             r_query = self.get_listener_query(database, table, handler)
         if VERBOSE is True:
-            print "*********** Listening using handler "+str(handler)+" with query "+str(r_query)
+            print "*********** Listening "+str(r_query)+" -> "+str(handler)+'.feed_handlers()'
+        handler = importlib.import_module(handler)
         for change in r_query.run(conn):
-            handler = importlib.import_module(handler)
             handler.feed_handlers(database, table, change)
         return
     

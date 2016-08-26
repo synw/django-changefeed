@@ -7,9 +7,7 @@ from django.conf import settings
 RETHINKDB_HOST = getattr(settings, 'RETHINKDB_HOST', 'localhost')
 RETHINKDB_PORT = getattr(settings, 'RETHINKDB_PORT', 28015)
 
-LISTEN = getattr(settings, 'CHANGEFEED_LISTEN', True)
-
-PUSH_AYSNC = getattr(settings, 'CHANGEFEED_PUSH_ASYNC', True)
+LISTEN = getattr(settings, 'CHANGEFEED_LISTEN', False)
 
 try:
     SITE_SLUG = getattr(settings, 'SITE_SLUG', 'site')
@@ -20,5 +18,3 @@ DATABASE = getattr(settings, 'CHANGEFEED_DB', SITE_SLUG)
 TABLE = getattr(settings, 'CHANGEFEED_TABLE', 'changefeed')
     
 VERBOSE = getattr(settings, 'CHANGEFEED_VERBOSE', True)
-
-HANDLERS = getattr(settings, 'CHANGEFEED_HANDLERS', ['changefeed.r_handlers'])
