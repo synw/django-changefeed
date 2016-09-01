@@ -41,7 +41,7 @@ class RethinkDB():
         handler = importlib.import_module(handlerpath)
         try:
             q = handler.r_query()
-        except ImportError:
+        except:
             q = self.get_default_query(database, table)
         return q
     
